@@ -7,5 +7,4 @@ export default function getName(nearRGB, colors) {
     )
       return color.name;
   }
-  console.log("getNameError");
 }

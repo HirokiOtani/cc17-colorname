@@ -5,7 +5,11 @@ import rgb2hex from "./helper/rgb2hex";
 import getName from "./helper/getName";
 import axios from "axios";
 import dbtypeToRgb from "./helper/dbtypeToRgb";
-//import Color3d from "color3d";
+import pushName from "./helper/pushName";
+//import { LineChart, Line } from "recharts";
+import { ColorSpace } from "./ColorSpace";
+import { Three } from "./Three";
+import { Canvas } from "react-three-fiber";
 
 export const ColorForm = () => {
   const [colors, setColors] = useState("");
@@ -14,6 +18,8 @@ export const ColorForm = () => {
     { R: 0, G: 255, B: 0 },
     { R: 0, G: 0, B: 255 },
   ]);
+  const [newName, setNewName] = useState("noNewName");
+  const [toggle, setToggle] = useState("");
 
   useEffect(() => {
     async function fetchColors() {
@@ -26,7 +32,7 @@ export const ColorForm = () => {
       }
     }
     fetchColors();
-  }, []);
+  }, [toggle]);
   const [color, setColor] = useState([255, 255, 255]); //initial color is black.
   const [nearRGB, setNearRGB] = useState(false);
   const [nearHex, setNearHex] = useState(false);
@@ -37,28 +43,7 @@ export const ColorForm = () => {
     );
     setNearRGB([near.R, near.G, near.B]);
     setNearHex(rgb2hex([near.R, near.G, near.B]));
-  }, [color]);
-
-  //const color3d = new Color3d(
-  //[
-  //"#FFF0F6",
-  //"#FFD6E7",
-  //"#FFADD2",
-  //"#FF85C0",
-  //"#F759AB",
-  //"#EB2F96",
-  //"#C41D7F",
-  //"#9E1068",
-  //"#780650",
-  //"#520339",
-  //],
-  //{
-  //spaceMode: "hsv",
-  //background: "#000000",
-  //}
-  //);
-  //console.log(color3d);
-  //color3d.render(document.getElementById("container"));
+  }, [color, palette, toggle]);
 
   return (
     <main>
@@ -75,6 +60,40 @@ export const ColorForm = () => {
       <h1 style={{ color: nearHex }}>{getName(nearRGB, colors)}</h1>
       {/* <div id="container">color3d</div> */}
       <div style={{ backgroundColor: nearHex, width: 30, height: 30 }}></div>
+      <button
+        onClick={() => {
+          pushName(color, getName(nearRGB, colors));
+          alert("pushed same name!");
+        }}
+      >
+        This Name is correct!
+      </button>
+      <form>
+        <input
+          type="text"
+          onChange={(e) => {
+            setNewName(e.target.value);
+          }}
+        ></input>
+        <input
+          type="button"
+          value="Submit new name!"
+          onClick={() => {
+            console.log("DDD", newName);
+            pushName(color, newName);
+            setToggle(newName);
+          }}
+        ></input>
+      </form>
+      <canvas id="myChart" width="400" height="400"></canvas>
+      {/* <ColorSpace /> */}
+      <Canvas>
+        <ambientLight />
+        <pointLight position={[10, 10, 10]} />
+        <Three position={[-1.2, 0, 0]} />
+        <Three position={[0, 0, 0]} />
+        <Three position={[1.2, 0, 0]} />
+      </Canvas>
     </main>
   );
 };

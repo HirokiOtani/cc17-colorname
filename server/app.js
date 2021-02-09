@@ -3,8 +3,11 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const db = require("./knex.js");
+const bodyParser = require("body-parser");
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Setup logger
 app.use(
@@ -22,6 +25,23 @@ app.get("/get", async (req, res) => {
     res.json(colors);
   } catch (err) {
     console.error("Error loading locations!", err);
+    res.sendStatus(500);
+  }
+});
+
+app.post("/postName", async (req, res) => {
+  try {
+    const name = req.body.name;
+    const color = req.body.color;
+    await db("colors").insert({
+      name: name,
+      r: color[0],
+      g: color[1],
+      b: color[2],
+    });
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
     res.sendStatus(500);
   }
 });

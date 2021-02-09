@@ -7,10 +7,10 @@ const config = {
     ssl: process.env.HAS_SSL ? { rejectUnauthorized: false } : undefined,
   },
   migrations: {
-    directory: "../db/migrations",
+    directory: "../cc17-colorname/db/migrations",
   },
   seeds: {
-    directory: "../db/seeds",
+    directory: "../cc17-colorname/db/seeds",
   },
   searchPath: "public",
 };
