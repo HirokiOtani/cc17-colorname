@@ -5,7 +5,7 @@ import rgb2hex from "./helper/rgb2hex";
 import getName from "./helper/getName";
 import axios from "axios";
 import dbtypeToRgb from "./helper/dbtypeToRgb";
-import Color3d from "color3d";
+//import Color3d from "color3d";
 
 export const ColorForm = () => {
   const [colors, setColors] = useState("");
@@ -39,24 +39,24 @@ export const ColorForm = () => {
     setNearHex(rgb2hex([near.R, near.G, near.B]));
   }, [color]);
 
-  const color3d = new Color3d(
-    [
-      "#FFF0F6",
-      "#FFD6E7",
-      "#FFADD2",
-      "#FF85C0",
-      "#F759AB",
-      "#EB2F96",
-      "#C41D7F",
-      "#9E1068",
-      "#780650",
-      "#520339",
-    ],
-    {
-      spaceMode: "hsv",
-      background: "#000000",
-    }
-  );
+  //const color3d = new Color3d(
+  //[
+  //"#FFF0F6",
+  //"#FFD6E7",
+  //"#FFADD2",
+  //"#FF85C0",
+  //"#F759AB",
+  //"#EB2F96",
+  //"#C41D7F",
+  //"#9E1068",
+  //"#780650",
+  //"#520339",
+  //],
+  //{
+  //spaceMode: "hsv",
+  //background: "#000000",
+  //}
+  //);
   //console.log(color3d);
   //color3d.render(document.getElementById("container"));
 
