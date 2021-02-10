@@ -33,11 +33,13 @@ app.post("/postName", async (req, res) => {
   try {
     const name = req.body.name;
     const color = req.body.color;
+    const hex = req.body.hex;
     await db("colors").insert({
       name: name,
       r: color[0],
       g: color[1],
       b: color[2],
+      hex: hex,
     });
     res.sendStatus(200);
   } catch (err) {

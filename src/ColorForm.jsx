@@ -10,9 +10,10 @@ import pushName from "./helper/pushName";
 import { ColorSpace } from "./ColorSpace";
 import { Three } from "./Three";
 import { Canvas } from "react-three-fiber";
+//import "./ColorFrom.css";
 
 export const ColorForm = () => {
-  const [colors, setColors] = useState("");
+  const [colors, setColors] = useState([{ name: "Black", r: 0, g: 0, b: 0 }]);
   const [palette, setPalette] = useState([
     { R: 255, G: 0, B: 0 },
     { R: 0, G: 255, B: 0 },
@@ -20,6 +21,7 @@ export const ColorForm = () => {
   ]);
   const [newName, setNewName] = useState("noNewName");
   const [toggle, setToggle] = useState("");
+  const [upLoadedFile, setUploadedFile] = useState({});
 
   useEffect(() => {
     async function fetchColors() {
@@ -47,23 +49,41 @@ export const ColorForm = () => {
 
   return (
     <main>
-      <h1>{`R: ${color[0]} G: ${color[1]} B: ${color[2]}`}</h1>
-      <h2>{nearRGB}</h2>
-      <h2>{nearHex}</h2>
+      {/* <h1>{`R: ${color[0]} G: ${color[1]} B: ${color[2]}`}</h1> */}
+      {/* <h2>{nearRGB}</h2> */}
+      {/* <h2>{nearHex}</h2> */}
       {/* <h3>{`R: ${colors[3].r} G: ${colors[3].g} B: ${colors[3].b}`}</h3> */}
       <input
         type="color"
         onChange={(e) => {
           setColor(hexToRgb(e.target.value));
         }}
+        style={{ position: "relative", top: 50, height: 45 }}
       ></input>
-      <h1 style={{ color: nearHex }}>{getName(nearRGB, colors)}</h1>
+      <h1 style={{ color: nearHex, position: "relative", right: 100 }}>
+        {getName(nearRGB, colors)}
+      </h1>
+      <img style={{ width: "200px" }} id="photo" alt="" />
+      <input
+        type="file"
+        onChange={(e) => {
+          setUploadedFile(e.target.files[0]);
+          const selectedFile = e.target.files[0];
+          const reader = new FileReader();
+          const imgtag = document.getElementById("photo");
+          reader.onload = function (event) {
+            imgtag.src = event.target.result;
+          };
+          reader.readAsDataURL(selectedFile);
+        }}
+      ></input>
       {/* <div id="container">color3d</div> */}
       <div style={{ backgroundColor: nearHex, width: 30, height: 30 }}></div>
       <button
         onClick={() => {
           pushName(color, getName(nearRGB, colors));
-          alert("pushed same name!");
+          setToggle(color);
+          //alert("pushed same name!");
         }}
       >
         This Name is correct!
@@ -86,7 +106,7 @@ export const ColorForm = () => {
         ></input>
       </form>
       <canvas id="myChart" width="400" height="400"></canvas>
-      {/* <ColorSpace /> */}
+      <ColorSpace colors={colors} />
       <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
