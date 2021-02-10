@@ -9,6 +9,7 @@ function App() {
       <body>
         <ColorForm />
       </body>
+      <script src="/__/firebase/init.js"></script>
     </div>
   );
 }
