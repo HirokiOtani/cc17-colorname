@@ -6,11 +6,7 @@ import getName from "./helper/getName";
 import axios from "axios";
 import dbtypeToRgb from "./helper/dbtypeToRgb";
 import pushName from "./helper/pushName";
-//import { LineChart, Line } from "recharts";
 import { ColorSpace } from "./ColorSpace";
-import { Three } from "./Three";
-import { Canvas } from "react-three-fiber";
-//import "./ColorFrom.css";
 
 export const ColorForm = () => {
   const [colors, setColors] = useState([{ name: "Black", r: 0, g: 0, b: 0 }]);
@@ -36,6 +32,7 @@ export const ColorForm = () => {
     fetchColors();
   }, [toggle]);
   const [color, setColor] = useState([255, 255, 255]); //initial color is black.
+  const [hex, setHex] = useState("");
   const [nearRGB, setNearRGB] = useState(false);
   const [nearHex, setNearHex] = useState(false);
   useEffect(() => {
@@ -48,24 +45,26 @@ export const ColorForm = () => {
   }, [color, palette, toggle]);
 
   return (
-    <main>
-      {/* <h1>{`R: ${color[0]} G: ${color[1]} B: ${color[2]}`}</h1> */}
-      {/* <h2>{nearRGB}</h2> */}
-      {/* <h2>{nearHex}</h2> */}
-      {/* <h3>{`R: ${colors[3].r} G: ${colors[3].g} B: ${colors[3].b}`}</h3> */}
+    <main style={{ backgroundColor: "#dee6ed", minHeight: 530 }}>
       <input
         type="color"
         onChange={(e) => {
           setColor(hexToRgb(e.target.value));
+          setHex(e.target.value);
         }}
-        style={{ position: "relative", top: 50, height: 45 }}
+        style={{ position: "absolute", top: 200, left: 20 }}
       ></input>
-      <h1 style={{ color: nearHex, position: "relative", right: 100 }}>
+      <h1 style={{ color: nearHex, position: "absolute", left: 270, top: 30 }}>
         {getName(nearRGB, colors)}
       </h1>
-      <img style={{ width: "200px" }} id="photo" alt="" />
+      <img
+        style={{ width: "200px", position: "absolute", left: 270, top: 200 }}
+        id="photo"
+        alt=""
+      />
       <input
         type="file"
+        style={{ position: "absolute", left: 20, top: 250 }}
         onChange={(e) => {
           setUploadedFile(e.target.files[0]);
           const selectedFile = e.target.files[0];
@@ -77,9 +76,28 @@ export const ColorForm = () => {
           reader.readAsDataURL(selectedFile);
         }}
       ></input>
-      {/* <div id="container">color3d</div> */}
-      <div style={{ backgroundColor: nearHex, width: 30, height: 30 }}></div>
+      <div
+        style={{
+          backgroundColor: hex,
+          width: 90,
+          height: 90,
+          position: "absolute",
+          left: 30,
+          top: 50,
+        }}
+      ></div>
+      <div
+        style={{
+          backgroundColor: nearHex,
+          width: 90,
+          height: 90,
+          position: "absolute",
+          left: 120,
+          top: 50,
+        }}
+      ></div>
       <button
+        style={{ position: "absolute", left: 20, top: 350 }}
         onClick={() => {
           pushName(color, getName(nearRGB, colors));
           setToggle(color);
@@ -88,18 +106,18 @@ export const ColorForm = () => {
       >
         This Name is correct!
       </button>
-      <form>
+      <form style={{ position: "absolute", left: 20, top: 400 }}>
         <input
           type="text"
           onChange={(e) => {
             setNewName(e.target.value);
           }}
         ></input>
+        <br></br>
         <input
           type="button"
           value="Submit new name!"
           onClick={() => {
-            console.log("DDD", newName);
             pushName(color, newName);
             setToggle(newName);
           }}
@@ -107,13 +125,13 @@ export const ColorForm = () => {
       </form>
       <canvas id="myChart" width="400" height="400"></canvas>
       <ColorSpace colors={colors} />
-      <Canvas>
+      {/* <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <Three position={[-1.2, 0, 0]} />
         <Three position={[0, 0, 0]} />
         <Three position={[1.2, 0, 0]} />
-      </Canvas>
+      </Canvas> */}
     </main>
   );
 };
