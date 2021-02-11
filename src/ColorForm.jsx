@@ -45,7 +45,13 @@ export const ColorForm = () => {
   }, [color, palette, toggle]);
 
   return (
-    <main style={{ backgroundColor: "#dee6ed", minHeight: 530 }}>
+    <main
+      style={{
+        backgroundColor: "#dee6ed",
+        // minHeight: 530,
+        height: "100vh",
+      }}
+    >
       <input
         type="color"
         onChange={(e) => {
