@@ -21,7 +21,7 @@ const config = {
     process.env.DATABASE_URL ||
     `postgres://${process.env.USER}:${process.env.PW}@127.0.0.1:5432/colorname`,
   migrations: {
-    directory: "../cc17-colorname/db/migrations",
+    directory: "../cc17-colorname/dbs/migrations",
   },
   seeds: {
     directory: "../cc17-colorname/db/seeds",
