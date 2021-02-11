@@ -12,6 +12,7 @@
     "color-diff": "^1.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
     "knex": "^0.21.17",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
