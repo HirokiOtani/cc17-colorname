@@ -101,7 +101,6 @@ export const ColorForm = () => {
         onClick={() => {
           pushName(color, getName(nearRGB, colors));
           setToggle(color);
-          //alert("pushed same name!");
         }}
       >
         This Name is correct!
@@ -125,13 +124,6 @@ export const ColorForm = () => {
       </form>
       <canvas id="myChart" width="400" height="400"></canvas>
       <ColorSpace colors={colors} />
-      {/* <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Three position={[-1.2, 0, 0]} />
-        <Three position={[0, 0, 0]} />
-        <Three position={[1.2, 0, 0]} />
-      </Canvas> */}
     </main>
   );
 };
